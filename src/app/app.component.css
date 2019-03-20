@@ -1,0 +1,11 @@
+table {
+  border: lightgrey solid 2px;
+}
+
+th,
+td {
+  /* padding: 10px; */
+  padding-left: 15px;
+  padding-right: 15px;
+  border: lightgrey solid 1px;
+}

@@ -1,0 +1,32 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+  <h1>
+    Welcome to the Gilded Rose Kata!
+  </h1>
+</div>
+<input type="number" [(ngModel)]="days"/>
+<button (click)="clearLog()">Clear Log</button>
+<button (click)="initGR()">Initiate</button>
+
+<div *ngFor="let day of dayLog">
+  <h2>Day: {{day.dayNumber}}</h2>
+    <table >
+      <tr>
+        <th>Name</th>
+        <th>Sell In</th>
+        <th>Quality</th>
+
+      </tr>
+      <tr *ngFor="let item of day.items">
+        <td>
+          {{item.name}}
+        </td>
+        <td>
+            {{item.sellIn}}
+          </td>
+          <td>
+              {{item.quality}}
+            </td>
+      </tr>
+    </table>
+</div>
