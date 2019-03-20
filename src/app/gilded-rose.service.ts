@@ -9,10 +9,11 @@ import { Day } from "./day";
 export class GildedRoseService {
   public gildedRose: GildedRose;
 
-  public dayLog: Day[] = [];
-
+  public dayLog: Day[];
 
   public initiateGildedRose(days: number) {
+
+    this.dayLog = [];
     const items = [
       new Item("+5 Dexterity Vest", 10, 20), //
       new Item("Aged Brie", 2, 0), //
@@ -26,14 +27,25 @@ export class GildedRoseService {
       new Item("Conjured Mana Cake", 3, 6)
     ];
 
-    const gildedRose = new GildedRose(items);
+    this.gildedRose = new GildedRose(items);
 
     for (let i = 0; i < days; i++) {
       let day: Day = new Day();
+      day.items = [];
       day.dayNumber = i;
-      day.items = items;
+
+      items.forEach(item => {
+        let titem = new Item(
+          item.name.toString(),
+          item.sellIn.toString(),
+          item.quality.toString()
+        );
+        day.items.push(titem);
+      });
+
       this.dayLog.push(day);
-      gildedRose.updateQuality();
+
+      this.gildedRose.updateQuality();
     }
   }
 
