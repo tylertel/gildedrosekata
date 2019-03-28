@@ -35,30 +35,29 @@ describe('Gilded Rose', function () {
 
         expect(garbagePassesCount).toEqual(passesWithLessSellIn);
 
-    })
+    });
 
     debugger;
-    service.dayLog.forEach(element => {
-        
-        let items=element.items
+    it('quality can\'t be Negative', function () {
+        service.dayLog.forEach(element => {
 
-        const gildedRose = new GildedRose(items);
+            let items = element.item;
 
-        const SulphurusQuality = items.filter(f => f.name = 'Sulfuras, Hand of Ragnaros')
-
-        let modifiedItems=gildedRose.updateQuality();
-
-        it('quality can\'t be Negative', function () {
-            let foundItem=gildedRose.items.filter(r => r.quality < 0).length;            
-            
+            let foundItem = items.filter(r => r.quality < 0).length;
+            debugger
             expect(foundItem).toEqual(0);
         })
+    })
+    it('quality can\'t be more than 50', function () {
 
-        it('quality can\'t be more than 50', function () {
-            let foundItem=gildedRose.items.filter(r => r.quality >= 50).length;
-            
+        service.dayLog.forEach(element => {
+
+            let items = element.items            
+
+            let foundItem =items.filter(r => r.quality >= 50).length;
+            debugger
             expect(foundItem).toEqual(0)
-            
+
         })
 
         // it('Sulfuras, quality never decreases',function(){
@@ -68,8 +67,8 @@ describe('Gilded Rose', function () {
         //     }
         // }
 
-        
+
     })
 });
-    
+
 
