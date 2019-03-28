@@ -8,7 +8,7 @@ describe('Gilded Rose', function () {
 
     TestBed.configureTestingModule({});
     let service: any;
-
+    debugger
     beforeAll(() => {
         service = TestBed.get(GildedRoseService);
         service.initiateGildedRose(periodInDays)
@@ -37,4 +37,39 @@ describe('Gilded Rose', function () {
 
     })
 
+    debugger;
+    service.dayLog.forEach(element => {
+        
+        let items=element.items
+
+        const gildedRose = new GildedRose(items);
+
+        const SulphurusQuality = items.filter(f => f.name = 'Sulfuras, Hand of Ragnaros')
+
+        let modifiedItems=gildedRose.updateQuality();
+
+        it('quality can\'t be Negative', function () {
+            let foundItem=gildedRose.items.filter(r => r.quality < 0).length;            
+            
+            expect(foundItem).toEqual(0);
+        })
+
+        it('quality can\'t be more than 50', function () {
+            let foundItem=gildedRose.items.filter(r => r.quality >= 50).length;
+            
+            expect(foundItem).toEqual(0)
+            
+        })
+
+        // it('Sulfuras, quality never decreases',function(){
+        //     debugger
+        //     if(modifiedItems.filter(f => f.name = 'Sulfuras, Hand of Ragnaros')===SulphurusQuality){
+        //         expect('Sulfuras Quality is same');
+        //     }
+        // }
+
+        
+    })
 });
+    
+
