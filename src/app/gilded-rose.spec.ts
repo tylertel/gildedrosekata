@@ -67,11 +67,19 @@ describe("Gilded Rose", function() {
     });
 
     expect(countOfItemsWithQualityGreaterThan50).toEqual(0);
+});
 
-    // it('Sulfuras, quality never decreases',function(){
-    //     if(modifiedItems.filter(f => f.name = 'Sulfuras, Hand of Ragnaros')===SulphurusQuality){
-    //         expect('Sulfuras Quality is same');
-    //     }
-    // }
-  });
+    it('Sulfuras, quality never decreases',function(){
+
+        let sulfurasStartingQuality = service.dayLog[0].items.filter(f => f.name = 'Sulfuras, Hand of Ragnaros').quality;
+        let countOfQualityDecreases = 0;
+        service.dayLog.forEach(day => {
+            //this can easily be changed to quality never changed instead of quality never decreases.
+            if(day.items.filter(f => f.name = 'Sulfuras, Hand of Ragnaros').quality < sulfurasStartingQuality){
+                countOfQualityDecreases++;
+            }
+        });
+
+        expect(countOfQualityDecreases).toBe(0);
+    }
 });
