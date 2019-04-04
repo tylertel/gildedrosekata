@@ -52,34 +52,39 @@ describe("Gilded Rose", function() {
 
   it("quality can't increase to be more than 50", function() {
     let countOfItemsWithQualityGreaterThan50 = 0;
-    
+
     service.dayLog.forEach(day => {
       let items = day.items;
 
-      
       let ItemsWithQualityGreaterThan50 = items.filter(r => r.quality > 50);
       ItemsWithQualityGreaterThan50.forEach(itemOver50 => {
-        let ItemStartingQualityValue = service.dayLog[0].items.find(x => x.name == itemOver50.name).quality;
-        if(itemOver50.quality > ItemStartingQualityValue){
-            countOfItemsWithQualityGreaterThan50++
+        let ItemStartingQualityValue = service.dayLog[0].items.find(
+          x => x.name == itemOver50.name
+        ).quality;
+        if (itemOver50.quality > ItemStartingQualityValue) {
+          countOfItemsWithQualityGreaterThan50++;
         }
-      });    
+      });
     });
 
     expect(countOfItemsWithQualityGreaterThan50).toEqual(0);
-});
+  });
 
-    it('Sulfuras, quality never decreases',function(){
+  it("Sulfuras, quality never decreases", function() {
+    let sulfurasStartingQuality = service.dayLog[0].items.filter(
+      f => (f.name = "Sulfuras, Hand of Ragnaros")
+    ).quality;
+    let countOfQualityDecreases = 0;
+    service.dayLog.forEach(day => {
+      //this can easily be changed to quality never changed instead of quality never decreases.
+      if (
+        day.items.filter(f => (f.name = "Sulfuras, Hand of Ragnaros")).quality <
+        sulfurasStartingQuality
+      ) {
+        countOfQualityDecreases++;
+      }
+    });
 
-        let sulfurasStartingQuality = service.dayLog[0].items.filter(f => f.name = 'Sulfuras, Hand of Ragnaros').quality;
-        let countOfQualityDecreases = 0;
-        service.dayLog.forEach(day => {
-            //this can easily be changed to quality never changed instead of quality never decreases.
-            if(day.items.filter(f => f.name = 'Sulfuras, Hand of Ragnaros').quality < sulfurasStartingQuality){
-                countOfQualityDecreases++;
-            }
-        });
-
-        expect(countOfQualityDecreases).toBe(0);
-    }
+    expect(countOfQualityDecreases).toBe(0);
+  });
 });
