@@ -12,6 +12,7 @@ describe("Gilded Rose", function() {
     service.initiateGildedRose(periodInDays);
   });
 
+  // Tyler
   //   it("Once the sell by date has passed, Quality degrades twice as fast", function() {
   //     expect(true).toBe(false);
   //   });
@@ -26,6 +27,7 @@ describe("Gilded Rose", function() {
     expect(foundItems).toEqual(0);
   });
 
+  // Tyler
   //   it("Aged Brie actually increases in Quality the older it gets", function(){
   //     expect(true).toBe(false);
   //   })
@@ -50,6 +52,7 @@ describe("Gilded Rose", function() {
     expect(countOfItemsWithQualityGreaterThan50).toEqual(0);
   });
 
+  // Mahendra
   //   it("Sulfuras, being a legendary item, never has to be sold", function(){
   //     expect(true).toBe(false);
   //   })
@@ -72,10 +75,12 @@ describe("Gilded Rose", function() {
     expect(countOfQualityDecreases).toBe(0);
   });
 
+  // Suhail
   //   it("BackStage passes: increases in Quality as its SellIn value approaches", function() {
   //     expect(true).toBe(false);
   //   });
 
+  // Suhail
   //   it("BackStage passes: Quality increases by 2 when there are 10 days or less and by 3 when there are 5 days or less", function() {
   //     expect(true).toBe(false);
   //   });
@@ -108,6 +113,7 @@ describe("Gilded Rose", function() {
     expect(garbagePassesCount).toEqual(passesWithLessSellIn);
   });
 
+  // Mahendra
   //   it("Conjured items: degrade in Quality twice as fast as normal items",function(){
   //     expect(true).toBe(false);
   //   })
