@@ -26,7 +26,9 @@ describe("Gilded Rose", function() {
     expect(foundItems).toEqual(0);
   });
 
-  //"Aged Brie" actually increases in Quality the older it gets
+  //   it("Aged Brie actually increases in Quality the older it gets", function(){
+  //     expect(true).toBe(false);
+  //   })
 
   it("The Quality of an item is never more than 50 * can't increase to over 50 see sulfuras", function() {
     let countOfItemsWithQualityGreaterThan50 = 0;
@@ -70,13 +72,13 @@ describe("Gilded Rose", function() {
     expect(countOfQualityDecreases).toBe(0);
   });
 
-  it("BackStage passes: increases in Quality as its SellIn value approaches", function() {
-    expect(true).toBe(false);
-  });
+  //   it("BackStage passes: increases in Quality as its SellIn value approaches", function() {
+  //     expect(true).toBe(false);
+  //   });
 
-  it("BackStage passes: Quality increases by 2 when there are 10 days or less and by 3 when there are 5 days or less", function() {
-    expect(true).toBe(false);
-  });
+  //   it("BackStage passes: Quality increases by 2 when there are 10 days or less and by 3 when there are 5 days or less", function() {
+  //     expect(true).toBe(false);
+  //   });
 
   it("BackStage passes: Quality drops to 0 after the concert", function() {
     let daysPassed = service.dayLog.length;
@@ -107,6 +109,6 @@ describe("Gilded Rose", function() {
   });
 
   //   it("Conjured items: degrade in Quality twice as fast as normal items",function(){
-
+  //     expect(true).toBe(false);
   //   })
 });
