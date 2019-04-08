@@ -4,7 +4,7 @@ import { TestBed } from "@angular/core/testing";
 import { GildedRoseService } from "./gilded-rose.service";
 
 const periodInDays: number = 30;
-describe("Gilded Rose", function () {
+describe("Gilded Rose", function() {
   TestBed.configureTestingModule({});
   let service: any;
   beforeAll(() => {
@@ -17,7 +17,7 @@ describe("Gilded Rose", function () {
   //     expect(true).toBe(false);
   //   });
 
-  it("The Quality of an item is never negative", function () {
+  it("The Quality of an item is never negative", function() {
     let foundItems = 0;
     service.dayLog.forEach(day => {
       let items = day.items;
@@ -32,7 +32,7 @@ describe("Gilded Rose", function () {
   //     expect(true).toBe(false);
   //   })
 
-  it("The Quality of an item is never more than 50 * can't increase to over 50 see sulfuras", function () {
+  it("The Quality of an item is never more than 50 * can't increase to over 50 see sulfuras", function() {
     let countOfItemsWithQualityGreaterThan50 = 0;
 
     service.dayLog.forEach(day => {
@@ -57,23 +57,23 @@ describe("Gilded Rose", function () {
   //     expect(true).toBe(false);
   //   })
 
-  it("Sulfuras, being a legendary item, never decreases in Quality", function () {
-    let sulfurasStartingQuality = service.dayLog[0].items.filter(
-      f => (f.name = "Sulfuras, Hand of Ragnaros")
-    ).quality;
-    let countOfQualityDecreases = 0;
-    service.dayLog.forEach(day => {
-      //this can easily be changed to quality never changed instead of quality never decreases.
-      if (
-        day.items.filter(f => (f.name = "Sulfuras, Hand of Ragnaros")).quality <
-        sulfurasStartingQuality
-      ) {
-        countOfQualityDecreases++;
-      }
-    });
+  // it("Sulfuras, being a legendary item, never decreases in Quality", function() {
+  //   let sulfurasStartingQuality = service.dayLog[0].items.filter(
+  //     f => (f.name = "Sulfuras, Hand of Ragnaros")
+  //   ).quality;
+  //   let countOfQualityDecreases = 0;
+  //   service.dayLog.forEach(day => {
+  //     //this can easily be changed to quality never changed instead of quality never decreases.
+  //     if (
+  //       day.items.filter(f => (f.name = "Sulfuras, Hand of Ragnaros")).quality <
+  //       sulfurasStartingQuality
+  //     ) {
+  //       countOfQualityDecreases++;
+  //     }
+  //   });
 
-    expect(countOfQualityDecreases).toBe(0);
-  });
+  //   expect(countOfQualityDecreases).toBe(0);
+  // });
 
   // Suhail
   //   it("BackStage passes: increases in Quality as its SellIn value approaches", function() {
@@ -85,7 +85,7 @@ describe("Gilded Rose", function () {
   //     expect(true).toBe(false);
   //   });
 
-  it("BackStage passes: Quality drops to 0 after the concert", function () {
+  it("BackStage passes: Quality drops to 0 after the concert", function() {
     let daysPassed = service.dayLog.length;
 
     let passesWithMoreSellIn = service.dayLog[0].items.filter(f => {
@@ -118,29 +118,58 @@ describe("Gilded Rose", function () {
   //     expect(true).toBe(false);
   //   })
 
-
   //Tyler- Aged Brie, 1 Quality degardes twice.
   //Mahendra- Conjured Items and Sulfuras
   //Suhail- 2 Backstage cases taking care of 3 and 5 days.
 
-  it("Conjured items decrease is value twice fast", function () {
+  it("Conjured items decrease is value twice fast", function() {
     let daysPassed = service.dayLog.length;
-    debugger
+    debugger;
     var n: number = 0;
     do {
-      service.dayLog[n].items.filter(f => {
-        if (f.name == 'Conjured Mana Cake') {
-          let nextItem =
-            service.dayLog[n + 1].items.filter(itm => itm.name == 'Conjured Mana Cake');
+      let allNitems = service.dayLog[n].items.filter(
+        f => f.name == "Conjured Mana Cake"
+      );
+      let allNPlusOneitems = service.dayLog[n + 1].items.filter(
+        f => f.name == "Conjured Mana Cake"
+      );
 
-          let nextItemQuality = parseInt(nextItem[0].quality) + 2;
-          expect(f.quality).toEqual(nextItemQuality)
-        }
-      })
+      let count = allNitems.length;
+
+      for (let index = 0; index < count; index++) {
+        let sulfurasItemQuality = parseInt(allNitems[index].quality);
+        let sulfurasNextItemQuality = parseInt(allNPlusOneitems[index].quality);
+        if (sulfurasItemQuality == sulfurasNextItemQuality)
+          expect(sulfurasItemQuality).toEqual(sulfurasNextItemQuality);
+        else expect(sulfurasItemQuality).toEqual(sulfurasNextItemQuality + 2);
+      }
+
       n++;
-    } while (n < daysPassed);
+    } while (n < daysPassed - 1);
+  });
 
+  it("Sulfuras Quality never decreases", function() {
+    let daysPassed: number = service.dayLog.length;
+    debugger;
+    let n: number = 0;
+    do {
+      let allNitems = service.dayLog[n].items.filter(
+        f => f.name == "Sulfuras, Hand of Ragnaros"
+      );
+      let allNPlusOneitems = service.dayLog[n + 1].items.filter(
+        f => f.name == "Sulfuras, Hand of Ragnaros"
+      );
 
-  })
+      let count = allNitems.length;
 
+      for (let index = 0; index < count; index++) {
+        let sulfurasItemQuality = parseInt(allNitems[index].quality);
+        let sulfurasNextItemQuality = parseInt(allNPlusOneitems[index].quality);
+
+        expect(sulfurasItemQuality).toEqual(sulfurasNextItemQuality);
+      }
+
+      n++;
+    } while (n < daysPassed - 1);
+  });
 });
