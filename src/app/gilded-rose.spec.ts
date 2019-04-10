@@ -86,27 +86,35 @@ describe("Gilded Rose", function() {
   });
 
   // Mahendra
+  it("Sulfuras, being a legendary item, never decreases in Quality", function() {
+    let daysPassed: number = service.dayLog.length;
+    debugger;
+    let n: number = 0;
+    do {
+      let allNitems = service.dayLog[n].items.filter(
+        f => f.name == "Sulfuras, Hand of Ragnaros"
+      );
+      let allNPlusOneitems = service.dayLog[n + 1].items.filter(
+        f => f.name == "Sulfuras, Hand of Ragnaros"
+      );
+
+      let count = allNitems.length;
+
+      for (let index = 0; index < count; index++) {
+        let sulfurasItemQuality = parseInt(allNitems[index].quality);
+        let sulfurasNextItemQuality = parseInt(allNPlusOneitems[index].quality);
+
+        expect(sulfurasItemQuality).toEqual(sulfurasNextItemQuality);
+      }
+
+      n++;
+    } while (n < daysPassed - 1);
+  });
+
+  // Mahendra
   //   it("Sulfuras, being a legendary item, never has to be sold", function(){
   //     expect(true).toBe(false);
   //   })
-
-  // it("Sulfuras, being a legendary item, never decreases in Quality", function() {
-  //   let sulfurasStartingQuality = service.dayLog[0].items.filter(
-  //     f => (f.name = "Sulfuras, Hand of Ragnaros")
-  //   ).quality;
-  //   let countOfQualityDecreases = 0;
-  //   service.dayLog.forEach(day => {
-  //     //this can easily be changed to quality never changed instead of quality never decreases.
-  //     if (
-  //       day.items.filter(f => (f.name = "Sulfuras, Hand of Ragnaros")).quality <
-  //       sulfurasStartingQuality
-  //     ) {
-  //       countOfQualityDecreases++;
-  //     }
-  //   });
-
-  //   expect(countOfQualityDecreases).toBe(0);
-  // });
 
   // Suhail
   //   it("BackStage passes: increases in Quality as its SellIn value approaches", function() {
@@ -146,10 +154,6 @@ describe("Gilded Rose", function() {
     expect(garbagePassesCount).toEqual(passesWithLessSellIn);
   });
 
-  //Tyler- Aged Brie, 1 Quality degardes twice.
-  //Mahendra- Conjured Items and Sulfuras
-  //Suhail- 2 Backstage cases taking care of 3 and 5 days.
-
   it("Conjured items decrease is value twice fast", function() {
     let daysPassed = service.dayLog.length;
     debugger;
@@ -170,31 +174,6 @@ describe("Gilded Rose", function() {
         if (sulfurasItemQuality == sulfurasNextItemQuality)
           expect(sulfurasItemQuality).toEqual(sulfurasNextItemQuality);
         else expect(sulfurasItemQuality).toEqual(sulfurasNextItemQuality + 2);
-      }
-
-      n++;
-    } while (n < daysPassed - 1);
-  });
-
-  it("Sulfuras Quality never decreases", function() {
-    let daysPassed: number = service.dayLog.length;
-    debugger;
-    let n: number = 0;
-    do {
-      let allNitems = service.dayLog[n].items.filter(
-        f => f.name == "Sulfuras, Hand of Ragnaros"
-      );
-      let allNPlusOneitems = service.dayLog[n + 1].items.filter(
-        f => f.name == "Sulfuras, Hand of Ragnaros"
-      );
-
-      let count = allNitems.length;
-
-      for (let index = 0; index < count; index++) {
-        let sulfurasItemQuality = parseInt(allNitems[index].quality);
-        let sulfurasNextItemQuality = parseInt(allNPlusOneitems[index].quality);
-
-        expect(sulfurasItemQuality).toEqual(sulfurasNextItemQuality);
       }
 
       n++;
