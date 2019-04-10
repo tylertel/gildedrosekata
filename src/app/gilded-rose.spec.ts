@@ -13,9 +13,26 @@ describe("Gilded Rose", function() {
   });
 
   // Tyler
-  //   it("Once the sell by date has passed, Quality degrades twice as fast", function() {
-  //     expect(true).toBe(false);
-  //   });
+  it("Once the sell by date has passed, Quality degrades twice as fast", function() {
+    var daycount: number = 0;
+    daycount = service.dayLog.length - 1;
+    let d = 1;
+    //0 == +5 Dexterity Vest is only one that follows 'normal' quality degredation
+    var testItems = [0];
+    for (var i in testItems) {
+      for (d = 1; d < daycount; d++) {
+        var prevDayQuality = service.dayLog[d - 1].items[i].quality;
+        var currentQuality = service.dayLog[d].items[i].quality;
+        if (currentQuality < prevDayQuality) {
+          if (service.dayLog[d].items[i].sellIn < 0) {
+            expect(parseInt(prevDayQuality)).toBe(parseInt(currentQuality) + 2);
+          } else {
+            expect(parseInt(prevDayQuality)).toBe(parseInt(currentQuality) + 1);
+          }
+        }
+      }
+    }
+  });
 
   it("The Quality of an item is never negative", function() {
     let foundItems = 0;
@@ -28,9 +45,25 @@ describe("Gilded Rose", function() {
   });
 
   // Tyler
-  //   it("Aged Brie actually increases in Quality the older it gets", function(){
-  //     expect(true).toBe(false);
-  //   })
+  it("Aged Brie actually increases in Quality the older it gets", function() {
+    var daycount: number = 0;
+    daycount = service.dayLog.length - 1;
+    var agedBrieIndex = service.dayLog[0].items.indexOf("Aged Brie");
+    agedBrieIndex = service.dayLog[0].items
+      .map(e => e.name)
+      .indexOf("Aged Brie");
+    let d = 1;
+
+    for (d = 1; d < daycount; d++) {
+      var prevDayQuality = service.dayLog[d - 1].items[agedBrieIndex].quality;
+      var currentQuality = service.dayLog[d].items[agedBrieIndex].quality;
+      if (currentQuality < 50) {
+        expect(parseInt(currentQuality)).toBeGreaterThan(
+          parseInt(prevDayQuality)
+        );
+      }
+    }
+  });
 
   it("The Quality of an item is never more than 50 * can't increase to over 50 see sulfuras", function() {
     let countOfItemsWithQualityGreaterThan50 = 0;
@@ -112,11 +145,6 @@ describe("Gilded Rose", function() {
 
     expect(garbagePassesCount).toEqual(passesWithLessSellIn);
   });
-
-  // Mahendra
-  //   it("Conjured items: degrade in Quality twice as fast as normal items",function(){
-  //     expect(true).toBe(false);
-  //   })
 
   //Tyler- Aged Brie, 1 Quality degardes twice.
   //Mahendra- Conjured Items and Sulfuras
