@@ -116,15 +116,75 @@ describe("Gilded Rose", function() {
   //     expect(true).toBe(false);
   //   })
 
-  // Suhail
-  //   it("BackStage passes: increases in Quality as its SellIn value approaches", function() {
-  //     expect(true).toBe(false);
-  //   });
+  it("BackStage passes: increases in Quality as its SellIn value approaches", function() {
+    var daycount: number = 0;
+    daycount = service.dayLog.length - 1;
+    var backStageItemIndex = service.dayLog[0].items.indexOf(
+      "Backstage passes to a TAFKAL80ETC concert"
+    );
+    backStageItemIndex = service.dayLog[0].items
+      .map(e => e.name)
+      .indexOf("Backstage passes to a TAFKAL80ETC concert");
 
-  // Suhail
-  //   it("BackStage passes: Quality increases by 2 when there are 10 days or less and by 3 when there are 5 days or less", function() {
-  //     expect(true).toBe(false);
-  //   });
+    for (let d = 1; d < daycount; d++) {
+      var backStageItemPrevDayQuality = service.dayLog[d - 1].items[backStageItemIndex].quality;
+      var backStageItemCurDayQuality = service.dayLog[d].items[backStageItemIndex].quality;
+      var backStageItemSellIn =
+        service.dayLog[d].items[backStageItemIndex].sellIn;
+      if (backStageItemSellIn > 10) {
+        expect(parseInt(backStageItemCurDayQuality)).toBeGreaterThan(
+          parseInt(backStageItemPrevDayQuality)
+        );
+      }
+    }
+  });
+
+  it("BackStage passes: Quality increases by 2 when there are 10 days or less", function() {
+    var daycount: number = 0;
+    daycount = service.dayLog.length - 1;
+    var backStageItemIndex = service.dayLog[0].items.indexOf(
+      "Backstage passes to a TAFKAL80ETC concert"
+    );
+    backStageItemIndex = service.dayLog[0].items
+      .map(e => e.name)
+      .indexOf("Backstage passes to a TAFKAL80ETC concert");
+
+    for (let d = 1; d < daycount; d++) {
+      var backStageItemPrevDayQuality = service.dayLog[d - 1].items[backStageItemIndex].quality;
+      var backStageItemCurDayQuality = service.dayLog[d].items[backStageItemIndex].quality;
+      var backStageItemSellIn = service.dayLog[d].items[backStageItemIndex].sellIn;
+      
+      if (backStageItemSellIn < 10 && backStageItemSellIn > 5) {
+        expect(parseInt(backStageItemCurDayQuality)).toEqual(
+          (parseInt(backStageItemPrevDayQuality)+2)
+        );
+      }
+    }
+  });
+
+  it("BackStage passes: Quality increases by 3 when there are 5 days or less", function() {
+    var daycount: number = 0;
+    daycount = service.dayLog.length - 1;
+    var backStageItemIndex = service.dayLog[0].items.indexOf(
+      "Backstage passes to a TAFKAL80ETC concert"
+    );
+    backStageItemIndex = service.dayLog[0].items
+      .map(e => e.name)
+      .indexOf("Backstage passes to a TAFKAL80ETC concert");
+
+    for (let d = 1; d < daycount; d++) {
+      var backStageItemPrevDayQuality = service.dayLog[d - 1].items[backStageItemIndex].quality;
+      var backStageItemCurDayQuality = service.dayLog[d].items[backStageItemIndex].quality;
+      var backStageItemSellIn = service.dayLog[d].items[backStageItemIndex].sellIn;
+
+      
+      if (backStageItemSellIn < 5 && backStageItemSellIn >0) {
+        expect(parseInt(backStageItemCurDayQuality)).toEqual(
+          (parseInt(backStageItemPrevDayQuality)+3)
+        );
+      }
+    }
+  });
 
   it("BackStage passes: Quality drops to 0 after the concert", function() {
     let daysPassed = service.dayLog.length;
