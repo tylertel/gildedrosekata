@@ -17,8 +17,13 @@ describe("Gilded Rose", function() {
     var daycount: number = 0;
     daycount = service.dayLog.length - 1;
     let d = 1;
+    
     //0 == +5 Dexterity Vest is only one that follows 'normal' quality degredation
-    var testItems = [0];
+    var dexterityVestIndex = service.dayLog[0].items
+      .map(e => e.name)
+      .indexOf("+5 Dexterity Vest");
+    var testItems = [dexterityVestIndex];
+
     for (var i in testItems) {
       for (d = 1; d < daycount; d++) {
         var prevDayQuality = service.dayLog[d - 1].items[i].quality;
@@ -48,8 +53,7 @@ describe("Gilded Rose", function() {
   it("Aged Brie actually increases in Quality the older it gets", function() {
     var daycount: number = 0;
     daycount = service.dayLog.length - 1;
-    var agedBrieIndex = service.dayLog[0].items.indexOf("Aged Brie");
-    agedBrieIndex = service.dayLog[0].items
+    var agedBrieIndex = service.dayLog[0].items
       .map(e => e.name)
       .indexOf("Aged Brie");
     let d = 1;
