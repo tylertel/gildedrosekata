@@ -40,7 +40,7 @@ export class GildedRose {
         }
       }
       if (this.items[i].name != "Sulfuras, Hand of Ragnaros") {
-        this.items[i].sellIn = this.items[i].sellIn - 1;
+        this.decreaseSellIn(this.items[i]);
       }
       if (this.items[i].sellIn < 0) {
         if (this.items[i].name != "Aged Brie") {
@@ -80,11 +80,15 @@ export class GildedRose {
     return this.items;
   }
 
-  increaseQuality(item: Item, amount: number) {
+  private decreaseSellIn(item: Item) {
+    item.sellIn = item.sellIn - 1;
+  }
+
+  private increaseQuality(item: Item, amount: number) {
     item.quality = item.quality + amount;
   }
 
-  decreaseQuality(item: Item, amount: number) {
+  private decreaseQuality(item: Item, amount: number) {
     item.quality = item.quality - amount;
   }
 }
