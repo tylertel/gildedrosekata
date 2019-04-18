@@ -14,10 +14,8 @@ export class GildedRose {
         this.items[i].name != "Backstage passes to a TAFKAL80ETC concert" &&
         this.items[i].name != "Conjured Mana Cake"
       ) {
-        if (this.items[i].quality > 0) {
-          if (this.items[i].name != "Sulfuras, Hand of Ragnaros") {
-            this.decreaseQualityNoLessThanZero(this.items[i], 1);
-          }
+        if (this.items[i].name != "Sulfuras, Hand of Ragnaros") {
+          this.decreaseQualityNoLessThanZero(this.items[i], 1);
         }
       } else {
         if (this.items[i].quality < 50) {
@@ -47,16 +45,17 @@ export class GildedRose {
           if (
             this.items[i].name != "Backstage passes to a TAFKAL80ETC concert"
           ) {
-            if (this.items[i].quality > 0) {
-              if (
-                this.items[i].name != "Sulfuras, Hand of Ragnaros" &&
-                this.items[i].name != "Conjured Mana Cake"
-              ) {
-                this.decreaseQualityNoLessThanZero(this.items[i], 1);
-              }
+            if (
+              this.items[i].name != "Sulfuras, Hand of Ragnaros" &&
+              this.items[i].name != "Conjured Mana Cake"
+            ) {
+              this.decreaseQualityNoLessThanZero(this.items[i], 1);
             }
           } else if (this.items[i].name != "Conjured Mana Cake") {
-            this.decreaseQualityNoLessThanZero(this.items[i], this.items[i].quality);
+            this.decreaseQualityNoLessThanZero(
+              this.items[i],
+              this.items[i].quality
+            );
           }
         } else {
           if (
@@ -85,10 +84,9 @@ export class GildedRose {
   }
 
   private decreaseQualityNoLessThanZero(item: Item, amount: number) {
-    if(item.quality - amount >= 0){
+    if (item.quality - amount >= 0) {
       item.quality = item.quality - amount;
-    }
-    else{
+    } else {
       item.quality = 0;
     }
   }

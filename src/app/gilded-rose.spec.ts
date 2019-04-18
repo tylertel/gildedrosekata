@@ -92,7 +92,6 @@ describe("Gilded Rose", function() {
   // Mahendra
   it("Sulfuras, being a legendary item, never decreases in Quality", function() {
     let daysPassed: number = service.dayLog.length;
-    debugger;
     let n: number = 0;
     do {
       let allNitems = service.dayLog[n].items.filter(
@@ -220,7 +219,6 @@ describe("Gilded Rose", function() {
 
   it("Conjured items decrease is value twice fast", function() {
     let daysPassed = service.dayLog.length;
-    debugger;
     var n: number = 0;
     do {
       let allNitems = service.dayLog[n].items.filter(
