@@ -12,7 +12,6 @@ export class GildedRoseService {
   public dayLog: Day[];
 
   public initiateGildedRose(days: number) {
-
     this.dayLog = [];
     const items = [
       new Item("+5 Dexterity Vest", 10, 20), //

@@ -9,70 +9,112 @@ export class GildedRose {
 
   updateQuality() {
     for (let i = 0; i < this.items.length; i++) {
-      if (
-        this.items[i].name != "Aged Brie" &&
-        this.items[i].name != "Backstage passes to a TAFKAL80ETC concert" &&
-        this.items[i].name != "Conjured Mana Cake"
-      ) {
-        if (this.items[i].quality > 0) {
-          if (this.items[i].name != "Sulfuras, Hand of Ragnaros") {
-            this.items[i].quality = this.items[i].quality - 1;
-          }
-        }
-      } else {
-        if (this.items[i].quality < 50) {
-          if (this.items[i].name != "Conjured Mana Cake")
-            this.items[i].quality = this.items[i].quality + 1;
-          if (
-            this.items[i].name == "Backstage passes to a TAFKAL80ETC concert"
-          ) {
-            if (this.items[i].sellIn < 11) {
-              if (this.items[i].quality < 50) {
-                this.items[i].quality = this.items[i].quality + 1;
-              }
-            }
-            if (this.items[i].sellIn < 6) {
-              if (this.items[i].quality < 50) {
-                this.items[i].quality = this.items[i].quality + 1;
-              }
-            }
-          }
-        }
-      }
-      if (this.items[i].name != "Sulfuras, Hand of Ragnaros") {
-        this.items[i].sellIn = this.items[i].sellIn - 1;
-      }
-      if (this.items[i].sellIn < 0) {
-        if (this.items[i].name != "Aged Brie") {
-          if (
-            this.items[i].name != "Backstage passes to a TAFKAL80ETC concert"
-          ) {
-            if (this.items[i].quality > 0) {
-              if (this.items[i].name != "Sulfuras, Hand of Ragnaros" &&
-              this.items[i].name != "Conjured Mana Cake") {
-                this.items[i].quality = this.items[i].quality - 1;
-              }
-            }
-          } else if(
-            this.items[i].name != "Conjured Mana Cake"){
-            this.items[i].quality =
-              this.items[i].quality - this.items[i].quality;
-          }
-        } else {
-          if (this.items[i].quality < 50 &&
-            this.items[i].name != "Conjured Mana Cake") {
-            this.items[i].quality = this.items[i].quality + 1;
-          }
-        }
-      }
-
-      if (this.items[i].name == "Conjured Mana Cake") {
-        let quality = this.items[i].quality;
-
-        if (quality - 2 > 0) this.items[i].quality = this.items[i].quality - 2;
-      }
+      this.ProcessItem(i);
     }
 
     return this.items;
   }
+
+  private ProcessItem(itemIndex: number) {
+    if (
+      this.NonLegendaryItems(itemIndex)
+    ) {
+      if (this.GetItemQuality(itemIndex) > 0) {
+        if (this.GetItemName(itemIndex) != ItemName.Sulfuras) {
+          this.DecrementQuality(itemIndex);
+        }
+      }
+    } else {
+      this.ProcessLegendaryItem(itemIndex);
+    }
+    if (this.GetItemName(itemIndex) != ItemName.Sulfuras) {
+      this.DecrementSellIn(itemIndex);
+    }
+    if (this.GetItemSellIn(itemIndex) < 0) {
+      if (this.GetItemName(itemIndex) != ItemName.Aged_Brie) {
+        if (
+          this.GetItemName(itemIndex) != ItemName.Backstage_Passes
+        ) {
+          if (this.GetItemQuality(itemIndex) > 0) {
+            if (
+              this.GetItemName(itemIndex) != ItemName.Sulfuras &&
+              this.GetItemName(itemIndex) != ItemName.Conjured_Mana_Cake
+            ) {
+              this.DecrementQuality(itemIndex);
+            }
+          }
+        } else if (this.GetItemName(itemIndex) != ItemName.Conjured_Mana_Cake) {
+          this.DecrementQuality(itemIndex, this.GetItemQuality(itemIndex));
+        }
+      } else {
+        if (
+          this.GetItemQuality(itemIndex) < 50 &&
+          this.GetItemName(itemIndex) != ItemName.Conjured_Mana_Cake
+        ) {
+          this.IncrementQuality(itemIndex);
+        }
+      }
+    }
+    if (this.GetItemName(itemIndex) == ItemName.Conjured_Mana_Cake) {
+      if (this.GetItemQuality(itemIndex) - 2 > 0) this.DecrementQuality(itemIndex, 2);
+    }
+  }
+
+  private GetItemQuality(itemIndex: number) {
+    return this.GetItemQuality(itemIndex);
+  }
+
+  private GetItemName(itemIndex: number) {
+    return this.GetItemName(itemIndex);
+  }
+
+  private ProcessLegendaryItem(itemIndex: number) {
+    if (this.GetItemQuality(itemIndex) < 50) {
+      if (this.GetItemName(itemIndex) != ItemName.Conjured_Mana_Cake)
+        this.IncrementQuality(itemIndex);
+      if (this.GetItemName(itemIndex) == ItemName.Backstage_Passes) {
+        if (this.GetItemSellIn(itemIndex) < 11) {
+          if (this.GetItemQuality(itemIndex) < 50) {
+            this.IncrementQuality(itemIndex);
+          }
+        }
+        if (this.GetItemSellIn(itemIndex) < 6) {
+          if (this.GetItemQuality(itemIndex) < 50) {
+            this.IncrementQuality(itemIndex);
+          }
+        }
+      }
+    }
+  }
+
+  private GetItemSellIn(itemIndex: number) {
+    return this.items[itemIndex].sellIn;
+  }
+
+  private NonLegendaryItems(itemIndex: number) {
+    return this.GetItemName(itemIndex) != ItemName.Aged_Brie &&
+      this.GetItemName(itemIndex) != ItemName.Backstage_Passes &&
+      this.GetItemName(itemIndex) != ItemName.Conjured_Mana_Cake;
+  }
+
+  private DecrementSellIn(itemIndex: number) {
+    this.items[itemIndex].sellIn = this.GetItemSellIn(itemIndex) - 1;
+  }
+
+  private IncrementQuality(itemIndex: number) {
+    this.items[itemIndex].quality = this.GetItemQuality(itemIndex) + 1;
+  }
+
+  private DecrementQuality(itemIndex: number, value: number = 1) {
+    this.items[itemIndex].quality = this.GetItemQuality(itemIndex) - value;
+  }  
+}
+
+export class ItemName {
+  public static Aged_Brie = "Aged Brie";
+  public static Backstage_Passes = "Backstage passes to a TAFKAL80ETC concert";
+  public static Conjured_Mana_Cake = "Conjured Mana Cake";
+  public static Sulfuras = "Sulfuras, Hand of Ragnaros";
+  public static Dexterity_Vest = "+5 Dexterity Vest";
+  public static Elixir_Mongoose = "Elixir of the Mongoose";
 }
