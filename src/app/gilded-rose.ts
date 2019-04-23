@@ -17,14 +17,16 @@ export class GildedRose {
         case "Conjured Mana Cake":
           this.decreaseSellIn(this.items[i]);
         break;
-        
+
+        case "Sulfuras, Hand of Ragnaros":
+          this.decreaseSellIn(this.items[i]);
+        break;
+
         default:
           if (
             this.items[i].name != "Backstage passes to a TAFKAL80ETC concert"
           ) {
-            if (this.items[i].name != "Sulfuras, Hand of Ragnaros") {
               this.decreaseQualityNoLessThanZero(this.items[i], 1);
-            }
           } else {
             if (this.items[i].quality < 50) {
                 this.increaseQuality(this.items[i], 1);
@@ -45,20 +47,16 @@ export class GildedRose {
               }
             }
           }
-          if (this.items[i].name != "Sulfuras, Hand of Ragnaros") {
             this.decreaseSellIn(this.items[i]);
-          }
           if (this.items[i].sellIn < 0) {
             if (this.items[i].name != "Aged Brie") {
               if (
                 this.items[i].name !=
                 "Backstage passes to a TAFKAL80ETC concert"
               ) {
-                if (
-                  this.items[i].name != "Sulfuras, Hand of Ragnaros"
-                ) {
+                
                   this.decreaseQualityNoLessThanZero(this.items[i], 1);
-                }
+                
               } else {
                 this.decreaseQualityNoLessThanZero(
                   this.items[i],
