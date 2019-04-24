@@ -23,27 +23,18 @@ export class GildedRose {
           break;
 
         case ItemName.Backstage_Passes:
-          if (this.GetItemQuality(i) < 50) {
+          if (this.GetItemSellIn(i) < 1) {
+            this.expireQuality(this.items[i]);
+          }
+          else if (this.GetItemSellIn(i) < 6) {
+            this.increaseQuality(this.items[i], 3);
+          }
+          else if (this.GetItemSellIn(i) < 11) {
+            this.increaseQuality(this.items[i], 2);
+          }
+          else
             this.increaseQuality(this.items[i], 1);
-
-            if (this.GetItemSellIn(i) < 11) {
-              if (this.GetItemQuality(i) < 50) {
-                this.increaseQuality(this.items[i], 1);
-              }
-            }
-            if (this.GetItemSellIn(i) < 6) {
-              if (this.GetItemQuality(i) < 50) {
-                this.increaseQuality(this.items[i], 1);
-              }
-            }
-          }
           this.decreaseSellIn(this.items[i]);
-          if (this.GetItemSellIn(i) < 0) {
-            this.decreaseQualityNoLessThanZero(
-              this.items[i],
-              this.items[i].quality
-            );
-          }
           break;
         default:
           this.decreaseQualityNoLessThanZero(this.items[i], 1);
@@ -63,7 +54,11 @@ export class GildedRose {
   }
 
   private increaseQuality(item: Item, amount: number) {
-    item.quality = item.quality + amount;
+    item.quality = item.quality + amount > 50 ? 50 : item.quality + amount;
+  }
+
+  private expireQuality(item: Item) {
+    item.quality = 0;
   }
 
   private decreaseQualityNoLessThanZero(item: Item, amount: number) {
