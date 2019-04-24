@@ -9,36 +9,36 @@ export class GildedRose {
 
   updateQuality() {
     for (let i = 0; i < this.items.length; i++) {
-      switch (this.items[i].name) {
-        case "Aged Brie":
+      switch (this.GetItemName(i)) {
+        case ItemName.Aged_Brie:
           this.increaseQuality(this.items[i], 1);
           this.decreaseSellIn(this.items[i]);
           break;
-        case "Conjured Mana Cake":
+        case ItemName.Conjured_Mana_Cake:
           this.decreaseSellIn(this.items[i]);
           break;
 
-        case "Sulfuras, Hand of Ragnaros":
+        case ItemName.Sulfuras:
           this.decreaseSellIn(this.items[i]);
           break;
 
-        case "Backstage passes to a TAFKAL80ETC concert":
-          if (this.items[i].quality < 50) {
+        case ItemName.Backstage_Passes:
+          if (this.GetItemQuality(i) < 50) {
             this.increaseQuality(this.items[i], 1);
 
-            if (this.items[i].sellIn < 11) {
-              if (this.items[i].quality < 50) {
+            if (this.GetItemSellIn(i) < 11) {
+              if (this.GetItemQuality(i) < 50) {
                 this.increaseQuality(this.items[i], 1);
               }
             }
-            if (this.items[i].sellIn < 6) {
-              if (this.items[i].quality < 50) {
+            if (this.GetItemSellIn(i) < 6) {
+              if (this.GetItemQuality(i) < 50) {
                 this.increaseQuality(this.items[i], 1);
               }
             }
           }
           this.decreaseSellIn(this.items[i]);
-          if (this.items[i].sellIn < 0) {
+          if (this.GetItemSellIn(i) < 0) {
             this.decreaseQualityNoLessThanZero(
               this.items[i],
               this.items[i].quality
@@ -49,7 +49,7 @@ export class GildedRose {
           this.decreaseQualityNoLessThanZero(this.items[i], 1);
 
           this.decreaseSellIn(this.items[i]);
-          if (this.items[i].sellIn < 0) {
+          if (this.GetItemSellIn(i) < 0) {
             this.decreaseQualityNoLessThanZero(this.items[i], 1);
           }
           break;
@@ -73,4 +73,25 @@ export class GildedRose {
       item.quality = 0;
     }
   }
+
+  private GetItemQuality(itemIndex: number) {
+    return this.items[itemIndex].quality;
+  }
+
+  private GetItemSellIn(itemIndex: number) {
+    return this.items[itemIndex].sellIn;
+  }
+
+  private GetItemName(itemIndex: number) {
+    return this.items[itemIndex].name;
+  }
+}
+
+export class ItemName {
+  public static Aged_Brie = "Aged Brie";
+  public static Backstage_Passes = "Backstage passes to a TAFKAL80ETC concert";
+  public static Conjured_Mana_Cake = "Conjured Mana Cake";
+  public static Sulfuras = "Sulfuras, Hand of Ragnaros";
+  public static Dexterity_Vest = "+5 Dexterity Vest";
+  public static Elixir_Mongoose = "Elixir of the Mongoose";
 }
