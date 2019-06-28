@@ -1,5 +1,3 @@
-import { GildedRose } from "../app/gilded-rose";
-import { Item } from "./item";
 import { TestBed } from "@angular/core/testing";
 import { GildedRoseService } from "./gilded-rose.service";
 
@@ -12,7 +10,6 @@ describe("Gilded Rose", function() {
     service.initiateGildedRose(periodInDays);
   });
 
-  // Tyler
   it("Once the sell by date has passed, Quality degrades twice as fast", function() {
     var daycount: number = 0;
     daycount = service.dayLog.length - 1;
@@ -49,7 +46,6 @@ describe("Gilded Rose", function() {
     expect(foundItems).toEqual(0);
   });
 
-  // Tyler
   it("Aged Brie actually increases in Quality the older it gets", function() {
     var daycount: number = 0;
     daycount = service.dayLog.length - 1;
@@ -89,7 +85,6 @@ describe("Gilded Rose", function() {
     expect(countOfItemsWithQualityGreaterThan50).toEqual(0);
   });
 
-  // Mahendra
   it("Sulfuras, being a legendary item, never decreases in Quality", function() {
     let daysPassed: number = service.dayLog.length;
     debugger;
@@ -115,10 +110,29 @@ describe("Gilded Rose", function() {
     } while (n < daysPassed - 1);
   });
 
-  // Mahendra
-  //   it("Sulfuras, being a legendary item, never has to be sold", function(){
-  //     expect(true).toBe(false);
-  //   })
+    it("Sulfuras, being a legendary item, never has to be sold", function(){
+      let daysPassed: number = service.dayLog.length;
+      debugger;
+      let n: number = 0;
+      do {
+        let allNitems = service.dayLog[n].items.filter(
+          f => f.name == "Sulfuras, Hand of Ragnaros"
+        );
+        let allNPlusOneitems = service.dayLog[n + 1].items.filter(
+          f => f.name == "Sulfuras, Hand of Ragnaros"
+        );
+  
+        let count = allNitems.length;
+  
+        for (let index = 0; index < count; index++) {
+          let sulfurasItemSellIn = parseInt(allNitems[index].sellIn);
+          let sulfurasNextItemSellIn = parseInt(allNPlusOneitems[index].sellIn);
+          expect(sulfurasItemSellIn).toEqual(sulfurasNextItemSellIn);
+        }
+  
+        n++;
+      } while (n < daysPassed - 1);
+    })
 
   it("BackStage passes: increases in Quality as its SellIn value approaches", function() {
     var daycount: number = 0;
