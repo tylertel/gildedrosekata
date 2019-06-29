@@ -1,12 +1,17 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to the Gilded Rose Kata!
-  </h1>
+<link
+  href="https://fonts.googleapis.com/css?family=Lobster&display=swap"
+  rel="stylesheet"
+/>
+<body>
+  <div class="info" style="">
+    <h1>
+      Gilded Rose Kata
+    </h1>
 
-  <details>
-    <summary> Detail </summary>
-    <pre style="word-wrap: break-word; white-space: pre-wrap;">
+    <details>
+      <summary> Detail </summary>
+      <pre style="word-wrap: break-word; white-space: pre-wrap;">
     Hi and welcome to team Gilded Rose. As you know, we are a small inn with a prime location in a
       prominent city ran by a friendly innkeeper named Allison. We also buy and sell only the finest goods.
       Unfortunately, our goods are constantly degrading in quality as they approach their sell by date. We
@@ -41,33 +46,36 @@
       
       Just for clarification, an item can never have its Quality increase above 50, however "Sulfuras" is a
       legendary item and as such its Quality is 80 and it never alters.
-    </pre>
-  </details>
-
-</div>
-<input type="number" [(ngModel)]="days"/>
-<button (click)="clearLog()">Clear Log</button>
-<button (click)="initGR()">Initiate</button>
-
-<div *ngFor="let day of dayLog">
-  <h2>Day: {{day.dayNumber}}</h2>
-    <table >
+    </pre
+      >
+    </details>
+  </div>
+  <div class="inputs">
+    Number of Days: <input class="daySelect" type="number" [(ngModel)]="days" />
+  </div>
+  <div class="inputs">
+    <button (click)="clearLog()">Clear Log</button>
+    <button (click)="initGR()">Initiate</button>
+  </div>
+  <div *ngFor="let day of dayLog">
+    <h3>Day: {{ day.dayNumber + 1 }} Inventory</h3>
+    <table>
       <tr>
         <th>Name</th>
         <th>Sell In</th>
         <th>Quality</th>
-
       </tr>
       <tr *ngFor="let item of day.items">
         <td>
-          {{item.name}}
+          {{ item.name }}
         </td>
         <td>
-            {{item.sellIn}}
-          </td>
-          <td>
-              {{item.quality}}
-            </td>
+          {{ item.sellIn }}
+        </td>
+        <td>
+          {{ item.quality }}
+        </td>
       </tr>
     </table>
-</div>
+  </div>
+</body>
